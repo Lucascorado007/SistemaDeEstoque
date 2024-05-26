@@ -66,7 +66,7 @@ public class Main{
       System.out.println("\n=====SISTEMA DE STOQUE=====");
       System.out.println("1. Adicionar produto");
       System.out.println("2. Visualizar Produtos");
-      System.out.println("3. Atualizar Qauntidade");
+      System.out.println("3. Atualizar Quantidade");
       System.out.println("4. Remover Produto");
       System.out.println("5. Sair");
       System.out.print("Escolha uma opção: ");
