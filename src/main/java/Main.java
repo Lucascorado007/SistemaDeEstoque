@@ -5,9 +5,9 @@ import java.util.Scanner;
 class Produto{
   private String nome;
   private String cor;
-  private int quantidade;
+  private double quantidade;
 
-  public Produto(String nome, String cor, int quantidade){
+  public Produto(String nome, String cor, double quantidade){
     this.nome = nome;
     this.cor = cor;
     this.quantidade = quantidade;
@@ -24,11 +24,17 @@ class Produto{
   public void setCor(String cor){
     this.cor = cor;
   }
-  public int getQuantidade(){
+  public double getQuantidade(){
     return quantidade;
   }
-  public void setQuantidade(int quantidade){
+  public void setQuantidade(Double quantidade){
     this.quantidade = quantidade;
+  }
+  public void adicionarQuantidade(Double quantidade){
+    this.quantidade += quantidade;
+  }
+  public void removerQuantidade(Double quantidade){
+    this.quantidade -= quantidade;
   }
 }
 class Inventario{
@@ -37,7 +43,7 @@ class Inventario{
     this.produtos = new HashMap<>();
   }
 
-  public void adicionarProduto(String nome, String     cor, int quantidade){
+  public void adicionarProduto(String nome, String     cor, double quantidade){
    Produto produto = new Produto(nome, cor,             quantidade);
   produtos.put(nome, produto);
   }
@@ -46,10 +52,10 @@ class Inventario{
    produtos.remove(nome);
   }
 
-  public void atualizarQuantidade(String nome, int     quantidade){
+  public void atualizarQuantidade(String nome, double quantidade){
   Produto produto = produtos.get(nome);
     if(produto != null){
-  produto.setQuantidade(quantidade);
+  produto.adicionarQuantidade(quantidade);
     }
   }
   public Produto getProduto(String nome){
@@ -96,18 +102,18 @@ public class Main{
     scanner.close();
   }
   private static void adicionarProduto(){
-    System.out.println("Adicionar produto: ");
+    System.out.println("\nADICIONAR PRODUTO: ");
     System.out.println("Digite o nome do produto: ");
     String nome = scanner.nextLine();
     System.out.println("Digite a cor do produto: ");
     String cor = scanner.nextLine();
     System.out.println("Digite a quantidade do produto: ");
-    int quantidade = scanner.nextInt();
+    double quantidade = scanner.nextDouble();
     inventario.adicionarProduto(nome, cor, quantidade);
-    System.out.println("Produto adicionado com sucesso!");
+    System.out.println("-Produto adicionado com sucesso! \n");
   }
   private static void visualizarProduto(){
-    System.out.println("Visualizar do produto: ");
+    System.out.println("\nVISUALIZAR PRODUTO: ");
     System.out.println("Nome do produto:");
     String nome = scanner.nextLine();
     Produto produto = inventario.getProduto(nome);
@@ -116,40 +122,41 @@ public class Main{
       System.out.println("Cor: " + produto.getCor());
       System.out.println("Quantidade: " + produto.getQuantidade());
     } else{
-      System.out.println("Produto não encontrado!");
+      System.out.println("-Produto não encontrado! \n");
     }
   }
   private static void atualizarQuantidade(){
-    System.out.println("Atualizar quantidade: ");
+    System.out.println("\nATUALIZAR QUANTIDADE: ");
     System.out.println("Digite o nome do produto: ");
     String nome = scanner.nextLine();
     System.out.println("Digite quantidade a ser adicionada: ");
-    int quantidade = scanner.nextInt();
+    double quantidade = scanner.nextDouble();
     Produto produto = inventario.getProduto(nome);
     if(produto != null){
-      int quantidadeAtual = produto.getQuantidade();
-      int atualizarQuantidade = quantidadeAtual + quantidade;
+      double quantidadeAtual = produto.getQuantidade();
+      double atualizarQuantidade = quantidadeAtual + produto.getQuantidade();
       inventario.atualizarQuantidade(nome, quantidadeAtual);
-      System.out.println("Quantidade atualizada com sucesso!");
+      System.out.println("-Quantidade atualizada com sucesso! \n");
     } else {
-      System.out.println("Produto não encontrado!");
+      System.out.println("-Produto não encontrado! \n");
     }
   }
   private static void removerProduto(){
-    System.out.println("Remover produto: ");
+    System.out.println("\nREMOVER PRODUTO: ");
     System.out.println("Digite o nome do produto: ");
     String nome = scanner.nextLine();
     System.out.println("Digite a quantidade a ser removida: ");
-    int removerQuantidade = scanner.nextInt();
+    double removerQuantidade = scanner.nextDouble();
     Produto produto = inventario.getProduto(nome);
     if(produto != null){
-      int quantidadeAtual = produto.getQuantidade();
+      double quantidadeAtual = produto.getQuantidade();
       if(quantidadeAtual >= removerQuantidade){
-      int atualizarQuantidade = quantidadeAtual - removerQuantidade;
+      produto.removerQuantidade(removerQuantidade);
+      double atualizarQuantidade = quantidadeAtual - removerQuantidade;
       inventario.atualizarQuantidade(nome, quantidadeAtual);
-      System.out.println("Produto removido com sucesso!");
+      System.out.println("-Produto removido com sucesso!");
     } else {
-      System.out.println("Quantidade insuficiente no estoque!");
+      System.out.println("-Quantidade insuficiente no estoque!");
       }
     }
     }
